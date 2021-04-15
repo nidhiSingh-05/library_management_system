@@ -1,0 +1,25 @@
+.Login{
+    width: 100%;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.LoginFrom{
+    display: flex;
+    flex-direction: column;
+}
+.LoginFrom input,button{
+    margin: 10px;
+    width: 700;
+    height: 50px;
+    font-family: 20px;
+}
+.LoginFrom button:hover{
+    cursor: pointer;
+}
+h1{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}

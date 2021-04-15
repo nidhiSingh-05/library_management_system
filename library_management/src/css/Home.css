@@ -1,0 +1,31 @@
+.Home{
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.Homefrom{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.Homefrom input{
+    width: 400px;
+    height: 50px;
+    margin: 5px;
+    font-size: 25px;
+}
+.Homefrom button{
+    width: 90px;
+    height: 30px;
+    margin: 5px;
+}
+.Homefrom button:hover{
+cursor: pointer;
+}
+.card{
+    width: 600px;
+    height: 80px;
+    border: 2px solid black;
+    /* border-radius: 15px; */
+    
+}
