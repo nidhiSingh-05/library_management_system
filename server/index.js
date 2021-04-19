@@ -31,17 +31,17 @@ app.post('/register',(req,res)=>{
 });
 
 app.post('/login',(req,res)=>{
-    const username = req.body.username
-    const password = req.body.password
+    const userName = req.body.userName;
+    const password = req.body.password;
 
-    db.query("select * from student where username=? AND password=?",[username,password],
+    db.query("select * from student where userName=? AND password=?",[userName,password],
     (err,result)=>{
         if(err){
             console.log(err);
         }
         if(result.length >0){
             if(password == result[0].password){
-                res.json({loggedIn:true,username:username});
+                res.json({loggedIn:true,userName:userName});
                 
             }
             else{

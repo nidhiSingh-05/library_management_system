@@ -42,7 +42,7 @@ function Login(props) {
             // if(active == null){
             //     active ={}
             //  }
-            let obj = {userName:userName,password:cur_password,status:true}
+            let obj = {userName:member,password:cur_password,status:true}
             console.log(obj)
             // active =obj;
             sessionStorage.setItem('activeUser',JSON.stringify(obj));
@@ -56,17 +56,17 @@ function Login(props) {
                 props.history.push('/home');
             }
             else{
-                axios.post("http://localhost:3001/login",{userName:userName,password:cur_password,}).then((response)=>{
+                axios.post("http://localhost:3001/login",{userName:userName,password:cur_password,}
+                ).then((response)=>{
                     if(response.data.message)
                     {
                         setIsLoggedIn(response.data.message)
                     }
                     else
                     {
-                      setIsLoggedIn(response.data[0].userName)
-                      console.log(response.data[0].userName)
-                            // changeLogin();
-                            props.history.push('/book')  
+                      setIsLoggedIn(response.data.username);
+                      console.log(response.data.username);
+                      props.history.push('/book')  
                          }
                        
                     })
@@ -123,7 +123,7 @@ function Login(props) {
                            
                         </div>
                     </div>
-                    <button  className='btn btn-primary ' onClick={(e)=>login(e)}>Login</button>&nbsp;&nbsp;&nbsp;
+                    <button  className='btn btn-primary mr-2' onClick={(e)=>login(e)}>Login</button>
                     <p>Create Account for newUser ?? <a href="/register">Register Now</a></p>
             </from>
             </div>
