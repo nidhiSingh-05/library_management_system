@@ -5,11 +5,14 @@ import React, { useEffect, useState } from 'react'
 function Login(props) {
 
     const [userName,setUserName] = useState('');
-    const [password,setPassword] = useState('');
+    const [cur_password,setPassword] = useState('');
     const[ isLoggedIn ,setIsLoggedIn]= useState('')
 
    //  const [errorMessage,setErrorMessage] = useState('');
    const [user,setUser] = useState([]);
+   const [id,setId] = useState(null);
+   const [flag,setFlag] = useState(false);
+   const [member,setMember] = useState(''); 
 
    useEffect(()=>{
        axios.get('http://localhost:3001/user').then((response)=>{
@@ -20,43 +23,40 @@ function Login(props) {
        });
    },[]);
 
-   let flag = false;
-    let id = null;
-    let member = "";
-
-
+   
     const login =(e)=>{
         e.preventDefault();
 
             user.map((u,i)=>{
-                if(u.userName == userName && u.password == password){
-                    id = u.id;
+                if(u.userName == userName && u.password == cur_password){
+                    setId(u.id);
                     console.log("id : " + id);
-                    member=u.userName;
+                    setMember(u.userName);
                     console.log("id : " + member);
-                    flag = true;
+                    setFlag(true);
                 }
                // console.log("id : " + id);
             });
             
-            let active = JSON.parse(sessionStorage.getItem('activeUser'));
-            if(active == null){
-                active ={}
-             }
-            let obj = {userName:member,password:password,status:true}
-            active =obj;
-            sessionStorage.setItem('activeUser',JSON.stringify(active));
-            if(userName.length ===" " || password.length === "")
+            let active = JSON.parse(sessionStorage.getItem('activeUser'))||{};
+            // if(active == null){
+            //     active ={}
+            //  }
+            let obj = {userName:userName,password:cur_password,status:true}
+            console.log(obj)
+            // active =obj;
+            sessionStorage.setItem('activeUser',JSON.stringify(obj));
+            if(userName.length ===" " || cur_password.length === "")
             {
                 alert('Enter UserName and password');
             }
-            else if(userName === "admin" && password ==="admin@123")
+            else if(userName === "admin" && cur_password ==="admin@123")
             {
                 alert('Welcome admin');
                 props.history.push('/home');
             }
             else{
-                axios.post("http://localhost:3001/login",{userName:userName,password:password,}).then((response)=>{
+                axios.post("http://localhost:3001/login",{userName:userName,password:cur_password,}).then((response)=>{
                     if(response.data.message)
                     {
                         setIsLoggedIn(response.data.message)
@@ -109,7 +109,7 @@ function Login(props) {
                         <div className="input-field col s12 mr-2">
                            <input type="text" placeholder="UserName...." 
                            className='form-control validate' 
-                          onChange={(e)=>setUserName(e)}/>
+                          onChange={(e)=>setUserName(e.target.value)}/>
                           
                            
                         </div>
@@ -118,7 +118,7 @@ function Login(props) {
                         <div className="input-field col s12 mr-2">
                            <input type="password" placeholder="Password...." 
                            className='form-control validate'
-                           onChange={(e)=>setPassword(e)}/>
+                           onChange={(e)=>setPassword(e.target.value)}/>
                            
                            
                         </div>
