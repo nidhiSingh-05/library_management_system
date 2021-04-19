@@ -55,6 +55,25 @@ app.post('/login',(req,res)=>{
     });
 });
 
+app.get('/user',(req,res)=>{
+    
+    db.query("select * from student",(err,result)=>{
+       if(err)
+       {
+           res.send({err:err})
+       }
+       if(result.length>0)
+       {
+        res.send(result)
+       }
+        else{
+            res.send({message:"No data"})
+        }
+      
+    })
+
+})
+
 app.post('/home/insert',(req,res)=>{
     // console.log( " in data insert")
     const bookName=req.body.bookName;
@@ -170,12 +189,13 @@ app.post('/book/issue/:bookId',(req,res)=>{
     const bookName =req.body.bookName;
     const autherName= req.body.autherName;
     const cost = req.body.cost;
-    const newDate = req.body.newDate;
-    const date2 = req.body.date2;
-  //  console.log(fromDate);
-    const Days = req.body.Days;
+    const newDate = req.body.fromDate;
+    const date2 = req.body.toDate;
+    const noOfDays = req.body.noOfDays;
+    // console.log(newDate);
+    // console.log(date2);
     const sqlInsert = "insert into issueBook (bookName,autherName,cost,fromDate,toDate,noOfDays) values (?,?,?,?,?,?)";
-    db.query(sqlInsert,[bookName,autherName,cost,newDate,date2,Days,bookId],(err,result)=>{
+    db.query(sqlInsert,[bookName,autherName,cost,newDate,date2,noOfDays,bookId],(err,result)=>{
         if(err)
         {
             console.log(err);

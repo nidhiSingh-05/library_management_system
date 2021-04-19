@@ -53,10 +53,10 @@ const MyBook = () => {
                                    <td>{val.bookName}</td>
                                    <td>{val.autherName}</td>
                                    <td>{val.cost}</td>
-                                   <td></td>
-                                   <td></td>
+                                   <td>{val.fromDate}</td>
+                                   <td>{val.toDate}</td>
+                                   <td>{val.noOfDays}</td>
                                    {/* <td></td> */}
-                                   <td></td>
                                     {/* <td><button onClick={(e)=>returnBook(e)} className="btn btn-success">ReturnBook</button> */}
                                    <td>
                                         <Link className="btn btn-success mr-2" to={`/fineInfo/${val.bookId}`}>Return_Book</Link>

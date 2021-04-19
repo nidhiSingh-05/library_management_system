@@ -8,17 +8,16 @@ import FristPage from './FristPage'
 import IssueBook from './IssueBook'
 import Book from './Book'
 import MyBook from './MyBook'
-import Admin from './Admin'
 import AdminEditBook from './AdminEditBook'
 import FineInfo from './FineInfo'
 import Logout from './Logout'
 
 const Navbar = () => {
-  let active = JSON.parse(sessionStorage.getItem('user')) ||{}
+  let active = JSON.parse(sessionStorage.getItem('ActiveUser')) 
   if(active == null)
   {
-    active={Status:false}
-    sessionStorage.setItem('user',JSON.stringify(active))
+    active={status:false}
+    sessionStorage.setItem('ActiveUser',JSON.stringify(active))
   }
   return (
     <BrowserRouter>
@@ -26,6 +25,7 @@ const Navbar = () => {
         <div className="container">
           <h5 className="left">LIBRARY MANAGEMENT SYSTEM</h5>
           <ul className="right">
+        
             {
               active.Status ?
               <>

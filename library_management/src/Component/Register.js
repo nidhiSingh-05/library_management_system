@@ -13,20 +13,20 @@ function Register(props) {
 
     const register =(e)=>{
         e.preventDefault();
-        if(userName.length === ''||userName.length> 0 || email.length === '' || password.length === '' || confirmPassword.length === '')
-        {
-            alert('fildes can not be empty');
-        }
-        else if(email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/))
-        {
-            setValue('Email should contain . and @')
-        }
-        else if(password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/))
-        {
-            setValue('password should conatin atleast 1 capital 1 special character and minimum length of 8')
-        }
-        else{
-            if(password === confirmPassword)
+        // if(userName.length === ''||userName.length> 0 || email.length === '' || password.length === '' || confirmPassword.length === '')
+        // {
+        //     alert('fildes can not be empty');
+        // }
+        // else if(email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/))
+        // {
+        //     setValue('Email should contain . and @')
+        // }
+        // else if(password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/))
+        // {
+        //     setValue('password should conatin atleast 1 capital 1 special character and minimum length of 8')
+        // }
+        // else{
+        //     if(password === confirmPassword)
         axios.post("http://localhost:3001/register",{username:userName,
         email:email,password:password,confirmPassword:confirmPassword}).then((response)=>{
             console.log(response.data);
@@ -34,7 +34,7 @@ function Register(props) {
             props.history.push('/login');
         }).catch(err=>{console.log(err);
         });
-   }
+   
 }
     return (
         <div className='container'>

@@ -1,65 +1,103 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 function Login(props) {
+
     const [userName,setUserName] = useState('');
     const [password,setPassword] = useState('');
-    const [userErr,setUserErr]  = useState('');
-    const [passErr,setPassErr]  = useState('');
+    const[ isLoggedIn ,setIsLoggedIn]= useState('')
 
-    const [errorMessage,setErrorMessage] = useState('');
-   
-    const userHandle=(e) =>{
-        let item = e.target.value;
-        if(item.length<0 || item.length=="")
-        {
-            setUserErr(true)
-        }
-        else{
-            setUserErr(false)
-        }
-    }
+   //  const [errorMessage,setErrorMessage] = useState('');
+   const [user,setUser] = useState([]);
 
-    const passHandler=(e)=>{
-        let item = e.target.value;
-        if(item.length <0 || item.length=="")
-        {
-            setPassErr(true);
-        }
-        else
-        {
-            setPassErr(false);
-        }
-    }
-   
+   useEffect(()=>{
+       axios.get('http://localhost:3001/user').then((response)=>{
+           console.log(response);
+           setUser(response.data);
+       }).catch((err)=>{
+           console.log(err);
+       });
+   },[]);
+
+   let flag = false;
+    let id = null;
+    let member = "";
+
+
     const login =(e)=>{
         e.preventDefault();
-        if(userName === "admin" && password ==="admin@123")
-        {
-            alert('welcome admin');
-            props.history.push('/home');
+
+            user.map((u,i)=>{
+                if(u.userName == userName && u.password == password){
+                    id = u.id;
+                    console.log("id : " + id);
+                    member=u.userName;
+                    console.log("id : " + member);
+                    flag = true;
+                }
+               // console.log("id : " + id);
+            });
             
-        }
-        else
-        {
-            props.history.push('/book');
-        }
-        axios.post("http://localhost:3001/login",{userName:userName,password:password,}).then((response)=>{
-           // console.log(response.data);
-          if(response.data.loggedIn){
-              localStorage.setItem("loggedIn",true);
-              localStorage.setItem("username",response.data.userName);
-              props.history.push('/register');
+            let active = JSON.parse(sessionStorage.getItem('activeUser'));
+            if(active == null){
+                active ={}
+             }
+            let obj = {userName:member,password:password,status:true}
+            active =obj;
+            sessionStorage.setItem('activeUser',JSON.stringify(active));
+            if(userName.length ===" " || password.length === "")
+            {
+                alert('Enter UserName and password');
+            }
+            else if(userName === "admin" && password ==="admin@123")
+            {
+                alert('Welcome admin');
+                props.history.push('/home');
+            }
+            else{
+                axios.post("http://localhost:3001/login",{userName:userName,password:password,}).then((response)=>{
+                    if(response.data.message)
+                    {
+                        setIsLoggedIn(response.data.message)
+                    }
+                    else
+                    {
+                      setIsLoggedIn(response.data[0].userName)
+                      console.log(response.data[0].userName)
+                            // changeLogin();
+                            props.history.push('/book')  
+                         }
+                       
+                    })
+                }
+                    
+            }
+    //     if(userName === "admin" && password ==="admin@123")
+    //     {
+    //         alert('welcome admin');
+    //         props.history.push('/home');
+            
+    //     }
+    //     else
+    //     {
+    //         props.history.push('/book');
+    //     }
+    //     axios.post("http://localhost:3001/login",{userName:userName,password:password,}).then((response)=>{
+    //        // console.log(response.data);
+    //       if(response.data.loggedIn){
+    //           localStorage.setItem("loggedIn",true);
+    //           localStorage.setItem("username",response.data.userName);
+    //           props.history.push('/register');
             
               
-          }
-          else{
-              setErrorMessage(response.data.message);
+    //       }
+    //       else{
+    //           setErrorMessage(response.data.message);
               
-          }
-        })
-    };
+    //       }
+    //     })
+    // };
     // props.history.push('/register');
     return (
         <div className="container center from-group">
@@ -68,30 +106,29 @@ function Login(props) {
             <div className="row">
                 <from autoComplete="off" className="m-5 col-md-10">
                     <div className="row">
-                        <div className="input-field col s12">
+                        <div className="input-field col s12 mr-2">
                            <input type="text" placeholder="UserName...." 
                            className='form-control validate' 
-                          onChange={userHandle}/>
-                          {userErr ? <span>user not valid</span> : ""}
-                           &nbsp;&nbsp;&nbsp;
+                          onChange={(e)=>setUserName(e)}/>
+                          
+                           
                         </div>
                     </div>
                     <div className="row">
-                        <div className="input-field col s12">
+                        <div className="input-field col s12 mr-2">
                            <input type="password" placeholder="Password...." 
                            className='form-control validate'
-                           onChange={passHandler}/>
-                           {passErr ? <span>password not valid </span> : ""}
-                            &nbsp;&nbsp;&nbsp;
+                           onChange={(e)=>setPassword(e)}/>
+                           
+                           
                         </div>
                     </div>
-                    <button type='button' className='btn btn-primary ' onClick={(e)=>login(e)}>Login</button>&nbsp;&nbsp;&nbsp;
+                    <button  className='btn btn-primary ' onClick={(e)=>login(e)}>Login</button>&nbsp;&nbsp;&nbsp;
                     <p>Create Account for newUser ?? <a href="/register">Register Now</a></p>
             </from>
             </div>
-            </center>
-            
-           {/* <h3>{errorMessage}</h3> */}
+            </center> 
+           <h3>{isLoggedIn}</h3>
         </div>
     )
 }

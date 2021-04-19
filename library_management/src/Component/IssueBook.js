@@ -23,8 +23,8 @@ const IssueBook = (props) => {
               setBookName(response.data[0].bookName);
               setAutherName(response.data[0].autherName);
               setCost(response.data[0].cost);
-              setFromDate(response.data[0].fromDate);
-              setToDate(response.data[0].toDate);
+              setFromDate(response.data[0].newDate);
+              setToDate(response.data[0].Date2);
               setNoOfDays(response.data[0].noOfDays);
          })
 
@@ -43,20 +43,19 @@ const IssueBook = (props) => {
     console.log(newDate);
     const date2 = new Date(new Date().getTime()+(5*24*60*60*1000)).toLocaleDateString('zh-Hans-CN');
 
-     var d1 = new Date(newDate);
-     var d2 = new Date(date2);
-     var time = d2.getTime() - d1.getTime();
-     var Days =  time/(1000*60*60*24);
-     console.log(Days);
+    //  var d1 = new Date(newDate);
+    //  var d2 = new Date(date2);
+    //  var time = d2.getTime() - d1.getTime();
+    //  var Days =  time/(1000*60*60*24);
+    //  console.log(Days);
 
     const issueBook=(e)=>{
        e.preventDefault();
         axios.post(`http://localhost:3001/book/issue/${bookId}`,{
-            bookName:bookName,autherName:autherName,cost:cost,fromDate:newDate,toDate:date2,noOfDays:Days
+            bookName:bookName,autherName:autherName,cost:cost,fromDate:newDate,toDate:date2,noOfDays:noOfDays
         }).then((res)=>{
             console.log(res);
             alert('issue book called');
-           // if(res.status === 200 || res.status === 'OK')
             props.history.push('/myBook');
         }).catch(err=>{
             console.log(err);

@@ -6,6 +6,7 @@ const FineInfo = (props) => {
     const [bookName,setBookName] =useState('');
     const [fromDate,setFromDate] =useState('');
     const [toDate,setToDate] =useState('');
+    const [noOfDays,setNoOfDays] = useState('');
     const { bookId } = useParams();
     
     const [bookList,setBookList] = useState([]);
@@ -33,8 +34,9 @@ const FineInfo = (props) => {
              bookName:bookName,fromDate:newDate,toDate:date2
          }).then((res)=>{
              console.log(res);
+             let fine = 
              alert('fine calculated');
-             props.history.push('/');
+           //  props.history.push('/');
          }).catch(err=>{
              console.log(err);
          })
@@ -45,7 +47,7 @@ const FineInfo = (props) => {
             <h3 style={{color:'red'}}>Fine Info</h3>
             <center>
             <div className="row">
-                <from autoComplete="off" className="m-5 col-md-10">
+                <from autoComplete="off" className="mr-5 col-md-10">
                 <label className='left'> Book Name  </label>
                         <div className="input-field col s12">
                            <input type="text" value={bookName} onChange={(e)=>setBookName(e.target.value)} 
@@ -66,10 +68,17 @@ const FineInfo = (props) => {
                            value={date2}
                            onChange={(e)=>setToDate(e.target.value)}
                            className='form-control validate' />
-                           
-                           </div>
+                             </div>
+
+                           <label className='left'> NoOfDays  </label>
+                        <div className="input-field col s12">
+                           <input type="text" 
+                           value={noOfDays}
+                           onChange={(e)=>setNoOfDays(e.target.value)}
+                           className='form-control validate' /> 
+                           </div>    
                            <button type='button' onClick={(e)=>calFine(e)} className='btn btn-primary mr-2'>Calculate_Fine</button>
-                           {/* <button type='button' className='btn btn-primary '>Cancle</button> */}
+                           <button type='button' className='btn btn-primary '>Return_Book</button>
                            </from>
                            </div>
                       </center>    
