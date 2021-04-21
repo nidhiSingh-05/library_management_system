@@ -25,23 +25,40 @@ const FineInfo = (props) => {
 
      const d = new Date();
      const newDate = d.toLocaleDateString('zh-Hans-CN');
-     console.log(newDate);
+    // console.log(newDate);
      const date2 = new Date(new Date().getTime()+(5*24*60*60*1000)).toLocaleDateString('zh-Hans-CN');
 
-     const calFine =(e)=>{
+     const calFine =(e)=>{ 
          e.preventDefault();
+         console.log(bookId);
          axios.put(`http://localhost:3001/myBook/fineInfo/${bookId}`,{
-             bookName:bookName,fromDate:newDate,toDate:date2
+             bookName:bookName,fromDate:newDate,toDate:date2,noOfDays:noOfDays
          }).then((res)=>{
              console.log(res);
-             let fine = 
-             alert('fine calculated');
+            //  console.log('no od days are '+noOfDays);
+             if(noOfDays == 5)
+             {
+                 alert('no fine');
+             }
+             else if(noOfDays > 5)
+             {
+             alert('fine calculated   ' + noOfDays*5);
+             }
+            //  console.log('called')
            //  props.history.push('/');
          }).catch(err=>{
              console.log(err);
          })
         
      }
+    
+     const returnBook=()=>{
+         console.log(bookId);
+        axios.delete(`http://localhost:3001/fineInfo/return/${bookId}`);
+        alert('book return');
+        props.history.push('/');
+     }
+
     return (
         <div className="container center from-group">
             <h3 style={{color:'red'}}>Fine Info</h3>
@@ -78,7 +95,7 @@ const FineInfo = (props) => {
                            className='form-control validate' /> 
                            </div>    
                            <button type='button' onClick={(e)=>calFine(e)} className='btn btn-primary mr-2'>Calculate_Fine</button>
-                           <button type='button' className='btn btn-primary '>Return_Book</button>
+                           <button type='button' onClick={(e)=>returnBook(e)} className='btn btn-primary '>Return_Book</button>
                            </from>
                            </div>
                       </center>    

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom'
 import Student from './Book'
 import Login from './Login'
@@ -13,12 +13,18 @@ import FineInfo from './FineInfo'
 import Logout from './Logout'
 
 const Navbar = () => {
-  let active = JSON.parse(sessionStorage.getItem('ActiveUser')) 
+  const [status, setStatus] = useState(null)
+  
+  useEffect(() => {
+  let active = JSON.parse(sessionStorage.getItem('activeUser')) 
   if(active == null)
   {
     active={status:false}
-    sessionStorage.setItem('ActiveUser',JSON.stringify(active))
-  }
+    sessionStorage.setItem('activeUser',JSON.stringify(active))
+    setStatus(false)
+  } 
+ 
+  }, [status])
   return (
     <BrowserRouter>
       <nav className ="nav-Wrapper" style={{backgroundColor:'blue'}}>
@@ -27,7 +33,7 @@ const Navbar = () => {
           <ul className="right">
         
             {
-              active.Status ?
+              status ?
               <>
              <li><NavLink to="/book">Book</NavLink></li>
             <li><NavLink to="/logout">Logout</NavLink></li> 

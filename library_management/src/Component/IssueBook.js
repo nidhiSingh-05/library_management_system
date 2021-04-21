@@ -40,7 +40,7 @@ const IssueBook = (props) => {
 
     const d = new Date();
     const newDate = d.toLocaleDateString('zh-Hans-CN');
-    console.log(newDate);
+   // console.log(newDate);
     const date2 = new Date(new Date().getTime()+(5*24*60*60*1000)).toLocaleDateString('zh-Hans-CN');
 
     //  var d1 = new Date(newDate);

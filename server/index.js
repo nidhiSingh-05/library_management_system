@@ -243,8 +243,9 @@ app.put('/myBook/fineInfo/:bookId',(req,res)=>{
     const bookName= req.body.bookName;
     const newDate = req.body.newDate;
     const date2 = req.body.date2;
-    const sqlUpdate = "update issueBook set bookName=? ,fromDate=? ,toDate=? where bookId =?";
-    db.query(sqlUpdate,[bookName,newDate,date2,bookId],(err,result)=>{
+    const noOfDays = req.body.noOfDays;
+    const sqlUpdate = "update issueBook set bookName=? ,fromDate=? ,toDate=?,noOfDays=? where bookId =?";
+    db.query(sqlUpdate,[bookName,newDate,date2,noOfDays,bookId],(err,result)=>{
         if(err)
         {
             console.log(err);
@@ -285,6 +286,37 @@ app.get('/myBook/get',(req,res)=>{
         }
     })
 })
+
+
+app.delete('/fineInfo/return/:bookId',(req,res)=>{
+    const bookId=req.params.bookId;
+   // const sqlDelete="delete from book where bookId = ? ";
+ //  console.log(bookId);
+    db.query("delete from issueBook where bookId = ? ",bookId,(err,result)=>{
+       if(err)
+       { 
+           console.log(err);
+       }
+       else
+       {
+            res.send(result);
+       }
+    })
+})
+
+app.get('/home/get/:bookId',(req,res)=>{
+    const bookId=req.params.bookId;
+    const sqlSelect="select * from issueBook where bookId =?";
+    db.query(sqlSelect,bookId,(err,result)=>{
+        if(err)
+        {
+        console.log(result);
+        }
+        else{
+        res.send(result);
+        }
+    });
+});
 
 app.listen(3001,()=>{
     console.log("running server");

@@ -2,11 +2,11 @@ import React,{useEffect} from 'react'
 import { BrowserRouter as Router, Route, Link, NavLink, Switch, Redirect, useHistory } from 'react-router-dom'
 function Logout() {
     let history = useHistory()
-    sessionStorage.removeItem("ActiveUser");
-    let Active = JSON.parse(sessionStorage.getItem('ActiveUser'))
-    if (Active == null) {
-        Active = { Status: false }
-        sessionStorage.setItem('ActiveUser', JSON.stringify(Active))
+    sessionStorage.removeItem("activeUser");
+    let active = JSON.parse(sessionStorage.getItem('activeUser'))
+    if (active == null) {
+        active = { Status: false }
+        sessionStorage.setItem('activeUser', JSON.stringify(active))
     }
 
     useEffect(()=>{
