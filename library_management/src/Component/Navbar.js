@@ -11,6 +11,7 @@ import MyBook from './MyBook'
 import AdminEditBook from './AdminEditBook'
 import FineInfo from './FineInfo'
 import Logout from './Logout'
+import History from './History'
 
 const Navbar = () => {
   const [status, setStatus] = useState(null)
@@ -38,13 +39,21 @@ const Navbar = () => {
              <li><NavLink to="/book">Book</NavLink></li>
             <li><NavLink to="/logout">Logout</NavLink></li> 
             <li><NavLink to="/mybook">MyBook</NavLink></li>
+            <li><NavLink to="/history">History</NavLink></li>
             </>
             :
             <>
-            <li><NavLink to="/login">Login</NavLink></li>
+            <li><NavLink to="/login" >Login</NavLink></li>
             <li><NavLink to="/register">Register</NavLink></li> 
             </>
             }
+
+            {/* <li><NavLink to="/book">Book</NavLink></li>
+            <li><NavLink to="/logout">Logout</NavLink></li> 
+            <li><NavLink to="/mybook">MyBook</NavLink></li>
+            <li><NavLink to="/history">History</NavLink></li>
+            <li><NavLink to="/login" >Login</NavLink></li>
+            <li><NavLink to="/register">Register</NavLink></li>  */}
           </ul>
         </div>
       </nav>
@@ -60,6 +69,7 @@ const Navbar = () => {
       <Route  path="/issueBook/:bookId" component={IssueBook}/>
       <Route  path="/adminEditBook/:bookId" component={AdminEditBook}/>
       <Route  path="/fineInfo/:bookId" component={FineInfo}/>
+      <Route  path="/history" component={History}/>
       </Switch>
     </BrowserRouter>
   )

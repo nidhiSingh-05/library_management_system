@@ -274,6 +274,7 @@ app.get('/myBook/get',(req,res)=>{
     const bookName= req.body.bookName;
     const fromDate = req.body.fromDate;
     const toDate = req.body.toDate;
+    
     const sqlSelect = "select * from issueBook";
     db.query(sqlSelect,[bookId,bookName,fromDate,toDate,],(err,result)=>{
         if(err)
@@ -317,6 +318,8 @@ app.get('/home/get/:bookId',(req,res)=>{
         }
     });
 });
+
+
 
 app.listen(3001,()=>{
     console.log("running server");

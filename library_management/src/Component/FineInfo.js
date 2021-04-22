@@ -7,6 +7,7 @@ const FineInfo = (props) => {
     const [fromDate,setFromDate] =useState('');
     const [toDate,setToDate] =useState('');
     const [noOfDays,setNoOfDays] = useState('');
+    const [fine,setFine] = useState('');
     const { bookId } = useParams();
     
     const [bookList,setBookList] = useState([]);
@@ -20,6 +21,7 @@ const FineInfo = (props) => {
              setBookName(response.data[0].bookName);
           //   setFromDate(response.data[0].fromDate);
              setToDate(response.data[0].toDate);
+             setFine(response.data[0].fine);
          })
      },[]);
 
@@ -32,7 +34,7 @@ const FineInfo = (props) => {
          e.preventDefault();
          console.log(bookId);
          axios.put(`http://localhost:3001/myBook/fineInfo/${bookId}`,{
-             bookName:bookName,fromDate:newDate,toDate:date2,noOfDays:noOfDays
+             bookName:bookName,fromDate:newDate,toDate:date2,noOfDays:noOfDays,fine:fine
          }).then((res)=>{
              console.log(res);
             //  console.log('no od days are '+noOfDays);
